@@ -76,51 +76,51 @@ over using an external store:
 
 1. The state is **by definition** bound to the component
 
-When rendering a very long list of carousels, keeping the state stored in the
-store in sync with the _actual_ list of rendered components is hard. Let's say
-we render one carousel for each photo "collection" — which could for example
-be represented by an array for image sources — keeping the array length in sync
-with whatever data structure we would use in the store for representing the
-selected slide index is unnecessarily complex. For example, when adding a photo
-collection, we need to add the `currentSlide` property to the store as well.
+  When rendering a very long list of carousels, keeping the state stored in the
+  store in sync with the _actual_ list of rendered components is hard. Let's say
+  we render one carousel for each photo "collection" — which could for example
+  be represented by an array for image sources — keeping the array length in sync
+  with whatever data structure we would use in the store for representing the
+  selected slide index is unnecessarily complex. For example, when adding a photo
+  collection, we need to add the `currentSlide` property to the store as well.
 
-Simply distinguishing between "component UI" state and global application state
-radically simplified the architecture in the above case, since component state
-can by definition not exist without a matching component (and vice versa).
+  Simply distinguishing between "component UI" state and global application state
+  radically simplified the architecture in the above case, since component state
+  can by definition not exist without a matching component (and vice versa).
 
 2. Simplified Testing
 
-Testing React components is extremely easy compared to other frameworks, such as
-Angular. Reason being that React components are by definition declarative, while
-Angular heavily relies on imperative APIs.
+  Testing React components is extremely easy compared to other frameworks, such as
+  Angular. Reason being that React components are by definition declarative, while
+  Angular heavily relies on imperative APIs.
 
-Using stores doesn't necessarily break this abstraction, but it makes it much
-harder to properly test all the possible states that a component can be in,
-since a store might contain state that isn't directly consumed by the component
-to be tested.
+  Using stores doesn't necessarily break this abstraction, but it makes it much
+  harder to properly test all the possible states that a component can be in,
+  since a store might contain state that isn't directly consumed by the component
+  to be tested.
 
-But more importantly, we now need to manage a store during testing. This means
-we need to make sure we **always** restore it to its previous state before every
-test case, otherwise this can lead to hard to debug failed tests. In Mocha, we
-can use `beforeEach` to run a function before every test case (`it(...)`).
+  But more importantly, we now need to manage a store during testing. This means
+  we need to make sure we **always** restore it to its previous state before every
+  test case, otherwise this can lead to hard to debug failed tests. In Mocha, we
+  can use `beforeEach` to run a function before every test case (`it(...)`).
 
-Instead of restoring the store's state, we can also mock it out. This
-eliminates the need to reset the store.
+  Instead of restoring the store's state, we can also mock it out. This
+  eliminates the need to reset the store.
 
 3. Reusing the component is possible
 
-While we focused on implementing our own set of stores, some people prefer to
-use Redux, Rx, mobx or some other library for managing state and implementing
-unidirectional data flow.
+  While we focused on implementing our own set of stores, some people prefer to
+  use Redux, Rx, mobx or some other library for managing state and implementing
+  unidirectional data flow.
 
-By storing state in an external store, we implicitly couple the component to
-whatever architecture we chose for our main application. If we're implementing
-an accordion component using Flux, it means everyone using our component will
-have to use Flux in order to interact with it (even though it might be hidden
-though the public API of the component).
+  By storing state in an external store, we implicitly couple the component to
+  whatever architecture we chose for our main application. If we're implementing
+  an accordion component using Flux, it means everyone using our component will
+  have to use Flux in order to interact with it (even though it might be hidden
+  though the public API of the component).
 
-Hence using component state (and props) instead of stores is the preferred way
-when creating reusable components.
+  Hence using component state (and props) instead of stores is the preferred way
+  when creating reusable components.
 
 ## Connecting components using lifecycle methods
 
