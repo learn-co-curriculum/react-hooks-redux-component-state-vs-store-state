@@ -10,7 +10,7 @@
 In this lesson we're going to revisit some of the concepts we have explored so
 far. Our focus will be on how components interact with each other and how global
 application state can be managed in a predictable, scalable way using actions,
-stores and handler function.
+stores and event handlers.
 
 ## Component State vs Store State
 
@@ -81,8 +81,8 @@ store in sync with the _actual_ list of rendered components is hard. Let's say
 we render one carousel for each photo "collection" — which could for example
 be represented by an array for image sources — keeping the array length in sync
 with whatever data structure we would use in the store for representing the
-selected slide index is unnecessarily complex. E.g. if we add a photo collection,
-we need to add the `currentSlide` property to the store as well.
+selected slide index is unnecessarily complex. For example, when adding a photo
+collection, we need to add the `currentSlide` property to the store as well.
 
 Simply distinguishing between "component UI" state and global application state
 radically simplified the architecture in the above case, since component state
@@ -90,7 +90,7 @@ can by definition not exist without a matching component (and vice versa).
 
 2. Simplified Testing
 
-Testing React component is extremely easy compared to other frameworks, such as
+Testing React components is extremely easy compared to other frameworks, such as
 Angular. Reason being that React components are by definition declarative, while
 Angular heavily relies on imperative APIs.
 
@@ -100,16 +100,17 @@ since a store might contain state that isn't directly consumed by the component
 to be tested.
 
 But more importantly, we now need to manage a store during testing. This means
-we need to make sure we **always** restore it to its previous state in an
-`beforeEach`, otherwise this can lead to hard to debug failed tests.
+we need to make sure we **always** restore it to its previous state before every
+test case, otherwise this can lead to hard to debug failed tests. In Mocha, we
+can use `beforeEach` to run a function before every test case (`it(...)`).
 
-Instead of adding a `beforeEach`, we can also mock it out, which eliminates the
-need to reset the store.
+Instead of restoring the store's state, we can also mock it out. This
+eliminates the need to reset the store.
 
 3. Reusing the component is possible
 
-While we focused implementing our own set of stores, some people prefer to use
-Redux, Rx, mobx or some other library for managing state and implementing
+While we focused on implementing our own set of stores, some people prefer to
+use Redux, Rx, mobx or some other library for managing state and implementing
 unidirectional data flow.
 
 By storing state in an external store, we implicitly couple the component to
@@ -139,8 +140,8 @@ class MyCounter extends React.Component {
 }
 ```
 
-In `componentDidMount` as add an event listener that updates the component's
-state based on the stores state, thus triggering a re-rendering.
+In `componentDidMount` we add an event listener that updates the component's
+state based on the store's state, thus triggering a re-rendering.
 
 In `componentWillUnmount` we remove the event listener. Typically `addListener`
 returns a function that — when invoked — removes the event listener from the
@@ -148,23 +149,10 @@ store. In other cases people might subclass the `EventEmitter` class directly
 in order to implement a store, hence there are cases in which we actually have
 to call `removeListener` on the store itself.
 
-`componentDidMount` and `componentWillUnmount` are so-called lifecycle methods,
-meaning they are being run as part of the component being mounted (or
-unmounted).
-
-There are some other lifecycle methods, e.g. `componentWillMount` and
-`componentWillUpdate`. One thing to remember is that there is **no**
-`componentDidUnmount` method. This is because once a component is unmounted in
-"no longer exists" in a sense, hence doing any form of cleanup logic in there
-would be "too late".
-
 Whether or not we use `componentDidMount` instead of `componentWillMount`
 doesn't make a difference here. We can call `setState` in both.
 
 ## Presentational vs Container Components
-
-When using a Flux or Flux-like architecture, it's generally speaking considered
-best-practice to avoid the number of container components.
 
 **Container components** are components that are directly **connected** to our
 store, e.g. using the `addListener` method. They are primarily concerned with
@@ -174,7 +162,9 @@ Container components have handler functions that dispatch actions or mutate
 state. They contain the "business logic" of our application.
 
 In single page apps, a good rule of thumb is to make each page of your
-application (or component attached to a sub-route) a container component.
+application (or component attached to a sub-route) a container component. While
+it isn't necessarily a bad idea to use nested container components, passing
+props to pure components tends to be easier to test and reason about.
 
 **Presentational components** are modular, reusable (and typically small)
 components that are concerned with "how stuff looks". They are not connected to
@@ -186,11 +176,12 @@ and therefore not concerned with the actual state of the application. E.g. a
 modal, accordion, or button should not be container components.
 
 Deciding whether or not something should be a container or presentational
-component is not a definite decision. Making presentational components stateful
+component is not a definitive decision. Making presentational components stateful
 by wiring them up to a store is usually quite easy and gets rid of a lot of
-indirection. E.g. passing down a lot of different props 5 levels deep is much
-more error prone then simply connecting the "leaf" component to the store. It
-also means we don't need to rerender all the components in between the
+indirection. For example passing down a lot of different props 5 levels deep is
+much more error prone than simply connecting the "leaf" component to the store.
+
+It also means we don't need to rerender all the components in between the
 presentational leaf component that is due to be rendered and the intermediate
 components that simply pass down the state via props from the container
 component.
