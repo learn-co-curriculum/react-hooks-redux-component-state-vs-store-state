@@ -19,7 +19,7 @@ When architecting a user interface, try to use local state and parent props **fi
 
 E.g. let's say we want to render some form of carousel, something like the [Bootstrap's Carousel component] (http://getbootstrap.com/javascript/#carousel):
 
-![Bootstrap Carousel][carousel]
+![Bootstrap Carousel](https://s3.amazonaws.com/learn-verified/react-components-events-actions-and-stores-carousel.png)
 
 A carousel is a perfect example on where using a store to extract out component state doesn't necessarily make things easier (or would simply be a massive overkill).
 
