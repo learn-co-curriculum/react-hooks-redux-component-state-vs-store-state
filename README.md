@@ -86,7 +86,7 @@ Hence using component state (and props) instead of stores is the preferred way w
 
 ## Connecting components using lifecycle methods
 
-So far we oftentimes "connected" components to stores by adding an event listener on the store in the component's lifecycle methods:
+So far, we oftentimes connect "connected" components to stores by adding an event listener on the store in the component's lifecycle methods:
 
 ```js
 class MyCounter extends React.Component {
