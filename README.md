@@ -80,7 +80,7 @@ Instead of restoring the store's state, we can also mock it out. This eliminates
 
 While we focused on implementing our own set of stores, some people prefer to use Redux, Rx, mobx or some other library for managing state and implementing unidirectional data flow.
 
-By storing state in an external store, we implicitly couple the component to whatever architecture we chose for our main application. If we're implementing an accordion component using Flux, it means everyone using our component will have to use Flux in order to interact with it (even though it might be hidden though the public API of the component).
+By storing state in an external store, we implicitly couple the component to whatever architecture we chose for our main application. If we're implementing an accordion component using Flux, it means everyone using our component will have to use Flux in order to interact with it (even though it might be hidden through the public API of the component).
 
 Hence using component state (and props) instead of stores is the preferred way when creating reusable components.
 
@@ -130,3 +130,5 @@ It also means we don't need to rerender all the components in between the presen
 - [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.jp0dni40i)
 
 [carousel]: assets/carousel.png "Bootstrap Carousel"
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-components-events-actions-and-stores'>Components, Events, Actions And Stores</a> on Learn.co and start learning to code for free.</p>
