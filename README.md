@@ -17,8 +17,7 @@ In general, we should not start out by putting all our state into some form of g
 
 When architecting a user interface, try to use local state and parent props **first**. If we end up constantly passing down tons of props, we should consider connecting the component in question with the respective Flux store.
 
-E.g. let's say we want to render some form of carousel, something like the [Bootstrap's Carousel component] (http://getbootstrap.com/javascript/#carousel):
-
+E.g. let's say we want to render some form of carousel, something like [Bootstrap's Carousel component](http://getbootstrap.com/javascript/#carousel).
 
 A carousel is a perfect example on where using a store to extract out component state doesn't necessarily make things easier (or would simply be a massive overkill).
 
@@ -127,7 +126,5 @@ It also means we don't need to rerender all the components in between the presen
 - [Interactivity and Dynamic UIs](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 - [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367#.7v3xs9al2)
 - [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.jp0dni40i)
-
-[carousel]: assets/carousel.png "Bootstrap Carousel"
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-components-events-actions-and-stores'>Components, Events, Actions And Stores</a> on Learn.co and start learning to code for free.</p>
