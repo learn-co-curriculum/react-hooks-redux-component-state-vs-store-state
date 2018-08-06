@@ -27,7 +27,7 @@ When architecting a user interface, try to use local state and parent props
 consider connecting the component in question with the respective Flux store.
 
 E.g. let's say we want to render some form of carousel, something like
-[Bootstrap's Carousel component](http://getbootstrap.com/javascript/#carousel).
+[Bootstrap's Carousel component](https://getbootstrap.com/docs/4.0/components/carousel/).
 
 A carousel is a perfect example on where using a store to extract out component
 state doesn't necessarily make things easier (or would simply be a massive
