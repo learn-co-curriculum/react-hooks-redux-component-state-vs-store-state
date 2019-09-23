@@ -89,8 +89,7 @@ can by definition not exist without a matching component (and vice versa).
 2. Simplified Testing
 
 Testing React components is extremely easy compared to other frameworks, such as
-Angular. Reason being that React components are by definition declarative, while
-Angular heavily relies on imperative APIs.
+Angular.
 
 Using stores doesn't necessarily break this abstraction, but it makes it much
 harder to properly test all the possible states that a component can be in,
