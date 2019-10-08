@@ -119,10 +119,12 @@ over using an external store:
 
    By storing state in an external store, we implicitly couple the component to
    whatever architecture we chose for our main application. If we're
-   implementing an accordion component using Flux (the data flow pattern Redux
+   implementing an accordion component using [Flux][] (the data flow pattern Redux
    is based on), it means everyone using our component will have to use Flux in
    order to interact with it (even though it might be hidden through the public
    API of the component).
+
+[Flux]: https://facebook.github.io/flux/
 
    Hence using component state (and props) instead of stores is the preferred
    way when creating reusable components.
