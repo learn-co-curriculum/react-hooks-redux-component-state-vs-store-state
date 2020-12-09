@@ -1,4 +1,4 @@
-# Components, Events, Actions, and Stores
+# React Component State vs Redux Store State
 
 ## Overview
 
@@ -16,7 +16,7 @@ stores and event handlers.
 
 While our previous lessons extensively focused on moving state **out** of
 individual components, we don't always have to. In fact, sometimes it might even
-introduce more complexity than needed. Using `setState()` and "local"
+introduce more complexity than needed. Using `useState()` and "local"
 component-level state is a perfectly fine choice in most cases.
 
 In general, we should not start out by putting all our state into some form of
@@ -37,35 +37,31 @@ Writing the essential handler functions for the component in question using
 "classical" React-style without **any** "outside" state is trivial:
 
 ```js
-class Carousel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // We start out rendering the first slide. 0 denotes the index of the
-      // active item.
-      currentSlide: 0,
-    };
-  }
+function Carousel() {
+  // We start out rendering the first slide. 0 denotes the index of the
+  // active item.
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   /**
    * Handler function that transitions to the next slide in the carousel.
    * This is the function that will be run once the user clicks the "next"
    * button.
    */
-  goNext = () => {
-    const previousSlide = this.state.currentSlide;
-    this.setState({ currentSlide: previousSlide + 1 });
+  function goNext() {
+    setCurrentSlide(prevSlide => prevSlide + 1);
   }
+
   /**
    * Equivalent to `goNext`. Handler function that will be invoked when clicking
    * the "back" button.
    */
-  goBack = () => {
-    const previousSlide = this.state.currentSlide;
-    this.setState({ currentSlide: previousSlide - 1 });
+  function goBack() {
+    setCurrentSlide(prevSlide => prevSlide - 1);
   }
-  render() {
-    // Magic goes here
-  }
+
+  return (
+    // JSX goes here
+  )
 }
 ```
 
@@ -95,7 +91,7 @@ over using an external store:
    individual components in a test, pass them props, cause state changes, check
    what JSX is rendered, etc...
 
-   [Enzyme]: https://airbnb.io/enzyme/
+   [enzyme]: https://airbnb.io/enzyme/
 
    Using stores doesn't necessarily break this abstraction, but it makes it much
    harder to properly test all the possible states that a component can be in,
@@ -114,7 +110,7 @@ over using an external store:
 3. Reusing the component is possible
 
    While we focused on implementing our own set of stores, some people prefer
-   to use Redux, Rx, mobx or some other library for managing state and
+   to use Redux, Rx, MobX or some other library for managing state and
    implementing unidirectional data flow.
 
    By storing state in an external store, we implicitly couple the component to
@@ -124,52 +120,33 @@ over using an external store:
    order to interact with it (even though it might be hidden through the public
    API of the component).
 
-[Flux]: https://facebook.github.io/flux/
+[flux]: https://facebook.github.io/flux/
 
-   Hence using component state (and props) instead of stores is the preferred
-   way when creating reusable components.
+Hence using component state (and props) instead of stores is the preferred
+way when creating reusable components.
 
-## Presentational vs Container Components
+## You Might Not Need Redux
 
-While it is possible to connect any component to our store, one pattern is to
-only connect **Container components**. Since they are primarily concerned
-managing state and actions that mutate the state of an app, they tend to be a
-good place to connect to the store.
+Since the release of React hooks, the React Context API and the [`useContext`
+hook][usecontext] has emerged as a popular alternative to using Redux. Some
+libraries we've worked with already, such as `react-router` and `react-redux`,
+actually use the Context API under the hood &mdash; that's how we're able to
+access our Redux store state, or information about the browser history, from
+_any_ component in our component hierarchy without prop drilling.
 
-In single page apps, a good rule of thumb is to make each page of your
-application (or component attached to a sub-route) a container component. While
-it isn't necessarily a bad idea to use nested container components, passing
-props to pure components tends to be easier to test and reason about.
+Before adding Redux to an application, make sure to think about whether or not your app would benefit from Redux. Check out [this article from the Redux docs][when should i use redux?] along with the linked articles and discussion for some help deciding if your app would benefit from Redux!
 
-**Presentational components** are modular, reusable (and typically small)
-components that are concerned with "how stuff looks". In this pattern, they are
-not typically connected to a store.
-
-Usually UI elements (with a bit of interaction) are presentational components
-and therefore not concerned with the actual state of the application. E.g. a
-modal, accordion, or button should not be container components. They only
-receive props and display them.
-
-The benefit of separating presentational components from any __Redux__ specific
-code is that it makes them highly reusable. They're just React components, after
-all.
-
-This is only a suggested pattern. Deciding whether or not something should be a
-container or presentational component is not a definitive decision. Making
-presentational components stateful by wiring them up to a store is usually quite
-easy and gets rid of a lot of indirection. For example passing down a lot of
-different props 5 levels deep is much more error prone than simply connecting
-the "leaf" component to the store.
-
-It also means we don't need to re-render all the components in between the
-presentational leaf component that is due to be rendered and the intermediate
-components that simply pass down the state via props from the container
-component.
+That said, Redux is very much still [alive and well][redux is not dead yet] and you are definitely encouraged to try it out in a project so you can learn, and add Redux to your toolkit!
 
 ## Resources
 
-- [Interactivity and Dynamic UIs](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
-- [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367#.7v3xs9al2)
-- [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.jp0dni40i)
+- [Application State Management with React](https://kentcdodds.com/blog/application-state-management-with-react)
+- [When should I use Redux?][]
+- [Redux is Not Dead Yet][]
+- [useContext][usecontext]
 
-<p class='util--hide'>View <a href='https://learn.co/lessons/react-components-events-actions-and-stores'>Components, Events, Actions And Stores</a> on Learn.co and start learning to code for free.</p>
+[usecontext]: https://reactjs.org/docs/hooks-reference.html#usecontext
+[when should i use redux?]: https://redux.js.org/faq/general#when-should-i-use-redux
+[redux is not dead yet]: https://blog.isquaredsoftware.com/2018/03/redux-not-dead-yet/
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-components-events-actions-and-stores'>React Component State vs Redux Store State</p>
