@@ -68,57 +68,57 @@ function Carousel() {
 In this case, using the local state of the component has a couple of advantages
 over using an external store:
 
-1. The state is **by definition** bound to the component
+#### 1. The state is **by definition** bound to the component
 
-   When rendering a very long list of carousels, keeping the state stored in the
-   store in sync with the _actual_ list of rendered components is hard. Let's
-   say we render one carousel for each photo "collection" — which could for
-   example be represented by an array for image sources — keeping the array
-   length in sync with whatever data structure we would use in the store for
-   representing the selected slide index is unnecessarily complex. For example,
-   when adding a photo collection, we would need to add the `currentSlide`
-   property to the store as well.
+When rendering a very long list of carousels, keeping the state stored in the
+store in sync with the _actual_ list of rendered components is hard. Let's
+say we render one carousel for each photo "collection" — which could for
+example be represented by an array for image sources — keeping the array
+length in sync with whatever data structure we would use in the store for
+representing the selected slide index is unnecessarily complex. For example,
+when adding a photo collection, we would need to add the `currentSlide`
+property to the store as well.
 
-   Simply distinguishing between "component UI" state and global application
-   state radically simplified the architecture in the above case, since
-   component state can by definition not exist without a matching component (and
-   vice versa).
+Simply distinguishing between "component UI" state and global application
+state radically simplified the architecture in the above case, since
+component state can by definition not exist without a matching component (and
+vice versa).
 
-2. Simplified Testing
+#### 2. Simplified Testing
 
-   Testing React components is extremely easy compared to other frameworks, such
-   as Angular. Testing packages like [Enzyme][] from Airbnb allow us to mount
-   individual components in a test, pass them props, cause state changes, check
-   what JSX is rendered, etc...
+Testing React components is extremely easy compared to other frameworks, such
+as Angular. Testing packages like [Enzyme][] from Airbnb allow us to mount
+individual components in a test, pass them props, cause state changes, check
+what JSX is rendered, etc...
 
-   [enzyme]: https://airbnb.io/enzyme/
+[enzyme]: https://airbnb.io/enzyme/
 
-   Using stores doesn't necessarily break this abstraction, but it makes it much
-   harder to properly test all the possible states that a component can be in,
-   since a store might contain state that isn't directly consumed by the
-   component to be tested.
+Using stores doesn't necessarily break this abstraction, but it makes it much
+harder to properly test all the possible states that a component can be in,
+since a store might contain state that isn't directly consumed by the
+component to be tested.
 
-   But more importantly, we now need to manage a store during testing. We can
-   use the same packages and functions like `createStore()` we use to set up
-   Redux with React, but the tests become more complicated and sometimes less
-   flexible as a result.
+But more importantly, we now need to manage a store during testing. We can
+use the same packages and functions like `createStore()` we use to set up
+Redux with React, but the tests become more complicated and sometimes less
+flexible as a result.
 
-   We can also mock it out &mdash; some node packages allow us to create a fake
-   store for the tests. Overall, though, because Redux changes the way data is
-   maintained, tests need to change accordingly, becoming more complicated.
+We can also mock it out &mdash; some node packages allow us to create a fake
+store for the tests. Overall, though, because Redux changes the way data is
+maintained, tests need to change accordingly, becoming more complicated.
 
-3. Reusing the component is possible
+#### 3. Reusing the component is possible
 
-   While we focused on implementing our own set of stores, some people prefer
-   to use Redux, Rx, MobX or some other library for managing state and
-   implementing unidirectional data flow.
+While we focused on implementing our own set of stores, some people prefer
+to use Redux, Rx, MobX or some other library for managing state and
+implementing unidirectional data flow.
 
-   By storing state in an external store, we implicitly couple the component to
-   whatever architecture we chose for our main application. If we're
-   implementing an accordion component using [Flux][] (the data flow pattern Redux
-   is based on), it means everyone using our component will have to use Flux in
-   order to interact with it (even though it might be hidden through the public
-   API of the component).
+By storing state in an external store, we implicitly couple the component to
+whatever architecture we chose for our main application. If we're
+implementing an accordion component using [Flux][] (the data flow pattern Redux
+is based on), it means everyone using our component will have to use Flux in
+order to interact with it (even though it might be hidden through the public
+API of the component).
 
 [flux]: https://facebook.github.io/flux/
 
@@ -148,5 +148,3 @@ That said, Redux is very much still [alive and well][redux is not dead yet] and 
 [usecontext]: https://reactjs.org/docs/hooks-reference.html#usecontext
 [when should i use redux?]: https://redux.js.org/faq/general#when-should-i-use-redux
 [redux is not dead yet]: https://blog.isquaredsoftware.com/2018/03/redux-not-dead-yet/
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/react-components-events-actions-and-stores'>React Component State vs Redux Store State</p>
