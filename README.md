@@ -103,7 +103,7 @@ use the same packages and functions like `createStore()` we use to set up
 Redux with React, but the tests become more complicated and sometimes less
 flexible as a result.
 
-We can also mock it out &mdash; some node packages allow us to create a fake
+We can also mock it out — some node packages allow us to create a fake
 store for the tests. Overall, though, because Redux changes the way data is
 maintained, tests need to change accordingly, becoming more complicated.
 
@@ -130,7 +130,7 @@ way when creating reusable components.
 Since the release of React hooks, the React Context API and the [`useContext`
 hook][usecontext] has emerged as a popular alternative to using Redux. Some
 libraries we've worked with already, such as `react-router` and `react-redux`,
-actually use the Context API under the hood &mdash; that's how we're able to
+actually use the Context API under the hood — that's how we're able to
 access our Redux store state, or information about the browser history, from
 _any_ component in our component hierarchy without prop drilling.
 
