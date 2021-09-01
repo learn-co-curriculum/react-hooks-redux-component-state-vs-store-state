@@ -1,16 +1,16 @@
 # React Component State vs Redux Store State
 
-## Overview
+## Objectives
 
-In this lesson we're going to revisit some of the concepts we have explored so
+- Explain interactions between different parts of a React application
+- Discuss trade-offs and benefits of one-way data flow
+
+## Introduction
+
+In this lesson, we're going to revisit some of the concepts we have explored so
 far. Our focus will be on how components interact with each other and how global
 application state can be managed in a predictable, scalable way using actions,
 stores and event handlers.
-
-## Objectives
-
-1. Review interactions between different parts of a React application
-2. Discuss trade-offs and benefits of one-way data flow
 
 ## Component State vs Store State
 
